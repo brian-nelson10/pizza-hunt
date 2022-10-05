@@ -49,15 +49,15 @@ const pizzaController = {
     // update pizza by id
     //  If we don't set that third parameter, { new: true }, it will return the original document.
     updatePizza({ params, body }, res) {
-        Pizza.findOneAndUpdate({ _id: params.id }, body, { new: true })
-        .then(dbPizzaData => {
+        Pizza.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
+          .then(dbPizzaData => {
             if (!dbPizzaData) {
-            res.status(404).json({ message: 'No pizza found with this id!' });
-                return;
+              res.status(404).json({ message: 'No pizza found with this id!' });
+              return;
             }
             res.json(dbPizzaData);
-        })
-        .catch(err => res.status(400).json(err));
+          })
+          .catch(err => res.status(400).json(err));
   },
 
   // delete pizza
